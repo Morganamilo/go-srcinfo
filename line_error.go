@@ -19,8 +19,8 @@ func (le LineError) Error() string {
 }
 
 // Error Returns a new LineError
-func Error(LineNumber int, Line string, ErrorStr string) LineError {
-	return LineError{
+func Error(LineNumber int, Line string, ErrorStr string) *LineError {
+	return &LineError{
 		LineNumber,
 		Line,
 		ErrorStr,
@@ -29,8 +29,8 @@ func Error(LineNumber int, Line string, ErrorStr string) LineError {
 
 // Errorf Returns a new LineError using the same formatting rules as
 // fmt.Printf.
-func Errorf(LineNumber int, Line string, ErrorStr string, args ...interface{}) LineError {
-	return LineError{
+func Errorf(LineNumber int, Line string, ErrorStr string, args ...interface{}) *LineError {
+	return &LineError{
 		LineNumber,
 		Line,
 		fmt.Sprintf(ErrorStr, args...),
