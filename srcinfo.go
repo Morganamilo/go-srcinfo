@@ -20,7 +20,7 @@ type ArchString struct {
 	Value string // Value
 }
 
-// Package describes the fields of a pkgbuild that may be overwritten by 
+// Package describes the fields of a pkgbuild that may be overwritten by
 // in build_<pkgname> function.
 type Package struct {
 	Pkgdesc    string

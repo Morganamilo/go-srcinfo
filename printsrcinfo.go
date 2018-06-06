@@ -44,20 +44,6 @@ func appendMultiArchValue(buffer *bytes.Buffer, key string, values []ArchString)
 	}
 }
 
-func appendArchValue(buffer *bytes.Buffer, key string, value ArchString) {
-	if value.Value == "" {
-		return
-	}
-
-	if value.Arch == "" {
-		if value.Arch == "" {
-			buffer.WriteString("\t" + key + " = " + value.Value + "\n")
-		} else {
-			buffer.WriteString("\t" + key + "_" + value.Arch + " = " + value.Value + "\n")
-		}
-	}
-}
-
 //String generates a string that should be similar to the srcinfo data used to
 //create this Srcinfo struct. Fields will be printed in order and with the same
 //whitespcae rules that `makepkg --printsrcinfo` uses.

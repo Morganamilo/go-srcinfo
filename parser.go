@@ -21,7 +21,7 @@ type parser struct {
 	headerType int
 
 	// srcingo is a Pointer to the Srcinfo we are currently building.
-	srcinfo    *Srcinfo
+	srcinfo *Srcinfo
 }
 
 func (psr *parser) currentPackage() (*Package, error) {
@@ -34,7 +34,7 @@ func (psr *parser) currentPackage() (*Package, error) {
 	}
 }
 
-func (psr *parser) setValue(key, value string) error {
+func (psr *parser) setField(key, value string) error {
 	pkgbase := &psr.srcinfo.PackageBase
 	seenPkgnames := map[string]struct{}{}
 
@@ -109,7 +109,7 @@ func (psr *parser) setValue(key, value string) error {
 
 	if found {
 		if psr.headerType != headerPkgbase {
-			return fmt.Errorf("key \"%s\" can not after pkgname", key)
+			return fmt.Errorf("key \"%s\" can not occur after pkgname", key)
 		}
 
 		return nil
@@ -164,12 +164,12 @@ func (psr *parser) splitLine(line string) (string, string, error) {
 	key := strings.TrimSpace(split[0])
 	value := strings.TrimSpace(split[1])
 
-	if key == ""  {
-		return "", "", fmt.Errorf("Key is empty", line)
+	if key == "" {
+		return "", "", fmt.Errorf("Key is empty")
 	}
 
-	if value == ""  {
-		return "", "", fmt.Errorf("value is empty", line)
+	if value == "" {
+		return "", "", fmt.Errorf("value is empty")
 	}
 
 	return key, value, nil
@@ -195,7 +195,7 @@ func parse(data string) (*Srcinfo, error) {
 			return nil, Error(n, line, err.Error())
 		}
 
-		err = psr.setValue(key, value)
+		err = psr.setField(key, value)
 		if err != nil {
 			return nil, Error(n, line, err.Error())
 		}
