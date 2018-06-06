@@ -58,6 +58,56 @@ func appendArchValue(buffer *bytes.Buffer, key string, value ArchString) {
 	}
 }
 
+//String generates a string that should be similar to the srcinfo data used to
+//create this Srcinfo struct. Fields will be printed in order and with the same
+//whitespcae rules that `makepkg --printsrcinfo` uses.
+//
+// The order of each global field is as follows:
+//	pkgdesc
+//	pkgver
+//	pkgrel
+//	epoch
+//	url
+//	install
+//	changelog
+//	arch
+//	groups
+//	license
+//	checkdepends
+//	makedepends
+//	depends
+//	optdepends
+//	provides
+//	conflicts
+//	replaces
+//	noextract
+//	options
+//	backup
+//	source
+//	validpgpkeys
+//	md5suns
+//	sha1sums
+//	sha224sums
+//	sha256sums
+//	sha384sums
+//	sha512sums
+//
+// The order of each overwritten field is as follows:
+//	pkgdesc
+//	url
+//	install
+//	changelog
+//	arch
+//	groups
+//	license
+//	checkdepends
+//	depends
+//	optdepends
+//	provides
+//	conflicts
+//	replaces
+//	options
+//	backup
 func (si *Srcinfo) String() string {
 	var buffer bytes.Buffer
 
@@ -113,50 +163,3 @@ func (si *Srcinfo) String() string {
 
 	return buffer.String()
 }
-
-// Order: global
-// pkgdesc
-// pkgver
-// pkgrel
-// epoch
-// url
-// install
-// changelog
-// arch
-// groups
-// license
-// checkdepends
-// makedepends
-// depends
-// optdepends
-// provides
-// conflicts
-// replaces
-// noextract
-// options
-// backup
-// source
-// validpgpkeys
-// md5suns
-// sha1sums
-// sha224sums
-// sha256sums
-// sha384sums
-// sha512sums
-//
-// Order: package
-// pkgdesc
-// url
-// install
-// changelog
-// arch
-// groups
-// license
-// checkdepends
-// depends
-// optdepends
-// provides
-// conflicts
-// replaces
-// options
-// backup

@@ -11,8 +11,16 @@ const (
 	headerPkgbase = -1
 )
 
+// parser is used to track our current state as we parse the srcinfo.
 type parser struct {
+	// headerType tracks the current header we are under. This starts out
+	// at headerNone, until a pkgbase field is found at which point it is
+	// changed to headerPkgbase. When we encounter a pkgname field this
+	// value is the index of the current package we are paring in
+	// srcinfo.Packages.
 	headerType int
+
+	// srcingo is a Pointer to the Srcinfo we are currently building.
 	srcinfo    *Srcinfo
 }
 
@@ -198,6 +206,8 @@ func parse(data string) (*Srcinfo, error) {
 
 }
 
+// getArchFromKey splits up architecture dependent field names, separating
+// the field name from the architecture they depend on.
 func getArchFromKey(key string) string {
 	split := strings.SplitN(key, "_", 2)
 	arch := ""
@@ -213,4 +223,19 @@ func makeArchString(key, value string) ArchString {
 		getArchFromKey(key),
 		value,
 	}
+}
+
+// ParseSrcinfo parses a srcinfo file as specified by path.
+func ParseSrcinfo(path string) (*Srcinfo, error) {
+	file, err := ioutil.ReadFile(path)
+	if err != nil {
+		return nil, fmt.Errorf("Unable to read file: %s: %s", path, err.Error())
+	}
+
+	return ParseSrcinfoData(string(file))
+}
+
+// ParseSrcinfoData parses a srcinfo in string form.
+func ParseSrcinfoData(data string) (*Srcinfo, error) {
+	return parse(data)
 }
