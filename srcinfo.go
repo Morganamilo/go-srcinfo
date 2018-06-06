@@ -86,7 +86,7 @@ func (si *Srcinfo) SplitPackage(pkgname string) (*Package, error) {
 		}
 	}
 
-	return nil, fmt.Errorf("Package \"%s\" is not part of this package base", pkgname)
+	return nil, fmt.Errorf("Package \"%s\" is not part of the package base \"%s\"", pkgname, si.Pkgbase)
 }
 
 func mergeSplitPackage(base, split *Package) *Package {

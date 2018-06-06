@@ -21,20 +21,12 @@ func appendValue(buffer *bytes.Buffer, key string, value string) {
 }
 
 func appendMultiValue(buffer *bytes.Buffer, key string, values []string) {
-	if len(values) == 0 {
-		return
-	}
-
 	for _, value := range values {
 		buffer.WriteString("\t" + key + " = " + value + "\n")
 	}
 }
 
 func appendMultiArchValue(buffer *bytes.Buffer, key string, values []ArchString) {
-	if len(values) == 0 {
-		return
-	}
-
 	for _, value := range values {
 		if value.Arch == "" {
 			buffer.WriteString("\t" + key + " = " + value.Value + "\n")
