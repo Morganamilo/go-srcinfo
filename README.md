@@ -1,5 +1,6 @@
 [![GPL3 license](https://img.shields.io/badge/License-GPL3-blue.svg)](LICENSE)
 [![GoDoc](https://godoc.org/github.com/morganamilo/go-srcinfo?status.svg)](https://godoc.org/github.com/morganamilo/go-srcinfo)
+[![Build Status](https://travis-ci.org/morganamilo/go-srcinfo.svg?branch=master)](https://travis-ci.org/morganamilo/go-srcinfo)
 [![codecov](https://codecov.io/gh/morganamilo/go-srcinfo/branch/master/graph/badge.svg)](https://codecov.io/gh/morganamilo/go-srcinfo)
 [![Go Report Card](https://goreportcard.com/badge/github.com/morganamilo/go-srcinfo)](https://goreportcard.com/report/github.com/morganamilo/go-srcinfo)
 
