@@ -113,10 +113,6 @@ func mergeSplitPackage(base, split *Package) *Package {
 		pkg.Groups = split.Groups
 	}
 
-	if len(split.License) != 0 {
-		pkg.License = split.License
-	}
-
 	if len(split.Depends) != 0 {
 		pkg.Depends = split.Depends
 	}

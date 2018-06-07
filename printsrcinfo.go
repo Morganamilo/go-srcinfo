@@ -101,7 +101,7 @@ func (si *Srcinfo) String() string {
 	appendMultiValue(&buffer, "arch", si.Arch)
 	appendMultiValue(&buffer, "groups", si.Groups)
 	appendMultiValue(&buffer, "license", si.License)
-	appendMultiArchValue(&buffer, "checkDepends", si.CheckDepends)
+	appendMultiArchValue(&buffer, "checkdepends", si.CheckDepends)
 	appendMultiArchValue(&buffer, "makedepends", si.MakeDepends)
 	appendMultiArchValue(&buffer, "depends", si.Depends)
 	appendMultiArchValue(&buffer, "optdepends", si.OptDepends)
