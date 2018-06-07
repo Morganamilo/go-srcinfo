@@ -121,7 +121,7 @@ func (si *Srcinfo) String() string {
 	appendMultiArchValue(&buffer, "sha512sums", si.SHA512Sums)
 
 	for n, pkg := range si.Packages {
-		appendHeader(&buffer, "\npkgname", si.Pkgnames[n])
+		appendHeader(&buffer, "\npkgname", si.Packages[n].Pkgname)
 
 		appendValue(&buffer, "pkgdesc", pkg.Pkgdesc)
 		appendValue(&buffer, "url", pkg.URL)

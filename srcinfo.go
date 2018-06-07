@@ -23,6 +23,7 @@ type ArchString struct {
 // Package describes the fields of a pkgbuild that may be overwritten by
 // in build_<pkgname> function.
 type Package struct {
+	Pkgname    string
 	Pkgdesc    string
 	Arch       []string
 	URL        string
@@ -43,7 +44,6 @@ type Package struct {
 // in package_<pkgname> function.
 type PackageBase struct {
 	Pkgbase      string
-	Pkgnames     []string
 	Pkgver       string
 	Pkgrel       string
 	Epoch        string
@@ -83,6 +83,18 @@ func (si *Srcinfo) Version() string {
 	return si.Epoch + ":" + si.Pkgver + "-" + si.Pkgrel
 }
 
+// SplitPackages generates a splice of all packages that are part of this
+// srcinfo. This is equivalent to calling SplitPackage on every pkgname.
+func (si *Srcinfo) SplitPackages() []*Package {
+	pkgs := make([]*Package, 0, len(si.Packages))
+
+	for _, pkg := range si.Packages {
+		pkgs = append(pkgs, mergeSplitPackage(&si.Package, &pkg))
+	}
+
+	return pkgs
+}
+
 // SplitPackage generates a Package that contains all fields that the specified
 // pkgname has. But will fall back on global fields if they are not defined in
 // the Package.
@@ -90,8 +102,8 @@ func (si *Srcinfo) Version() string {
 // Note slice values will be passed by reference, it is not recommended you
 // modify this struct after it is returned.
 func (si *Srcinfo) SplitPackage(pkgname string) (*Package, error) {
-	for n, name := range si.Pkgnames {
-		if name == pkgname {
+	for n := range si.Packages {
+		if si.Packages[n].Pkgname == pkgname {
 			return mergeSplitPackage(&si.Package, &si.Packages[n]), nil
 		}
 	}
@@ -102,6 +114,8 @@ func (si *Srcinfo) SplitPackage(pkgname string) (*Package, error) {
 func mergeSplitPackage(base, split *Package) *Package {
 	pkg := &Package{}
 	*pkg = *base
+
+	pkg.Pkgname = split.Pkgname
 
 	if split.Pkgdesc != "" {
 		pkg.Pkgdesc = split.Pkgdesc

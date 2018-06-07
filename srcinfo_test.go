@@ -696,10 +696,16 @@ func TestGoodSrcinfos(t *testing.T) {
 			continue
 		}
 
-		for _, pkgname := range srcinfo.Pkgnames {
-			splitpkg, err := srcinfo.SplitPackage(pkgname)
+		splitpkgs := srcinfo.SplitPackages()
+
+		for n, pkg := range srcinfo.Packages {
+			splitpkg, err := srcinfo.SplitPackage(pkg.Pkgname)
 			if err != nil {
-				t.Errorf("Error getting split package %s from %s: %s", splitpkg, name, err)
+				t.Errorf("Error getting split package %s from %s: %s", splitpkg, pkg.Pkgname, err)
+			}
+
+			if splitpkg.Pkgname != splitpkgs[n].Pkgname {
+				t.Errorf("Split packages do not match for %s", name)
 			}
 		}
 

@@ -58,9 +58,8 @@ func (psr *parser) setHeaderOrField(key, value string) error {
 		}
 		psr.seenPkgnames[value] = struct{}{}
 
-		pkgbase.Pkgnames = append(pkgbase.Pkgnames, value)
-		psr.srcinfo.Packages = append(psr.srcinfo.Packages, Package{})
-		psr.headerType = len(pkgbase.Pkgnames) - 1
+		psr.srcinfo.Packages = append(psr.srcinfo.Packages, Package{Pkgname: value})
+		psr.headerType = len(psr.srcinfo.Packages) - 1
 		return nil
 	}
 
@@ -222,7 +221,7 @@ func parse(data string) (*Srcinfo, error) {
 		return nil, fmt.Errorf("No pkgbase field")
 	}
 
-	if len(psr.srcinfo.Pkgnames) == 0 {
+	if len(psr.srcinfo.Packages) == 0 {
 		return nil, fmt.Errorf("No pkgname field")
 	}
 
