@@ -73,6 +73,16 @@ type Srcinfo struct {
 	Packages []Package
 }
 
+// Version formats a version string from the epoch, pkgver and pkgrel of the
+// srcinfo. In the format [epoch:]pkgver-pkgrel.
+func (si *Srcinfo) Version() string {
+	if si.Epoch == "" {
+		return si.Pkgver + "-" + si.Pkgrel
+	}
+
+	return si.Epoch + ":" + si.Pkgver + "-" + si.Pkgrel
+}
+
 // SplitPackage generates a Package that contains all fields that the specified
 // pkgname has. But will fall back on global fields if they are not defined in
 // the Package.

@@ -728,3 +728,30 @@ func TestSrcinfoData(t *testing.T) {
 		t.Errorf("Error parsing data: %s", err)
 	}
 }
+
+func TestVersion(t *testing.T) {
+	versions := [...]string{
+		"1:8-2",
+		"6.777-2",
+		"6.777.r1.g3f15788-1",
+	}
+
+	srcinfos := [...]string{
+		"stockfish",
+		"yay",
+		"yay-git",
+	}
+
+	for n, name := range srcinfos {
+		path := filepath.Join(goodSrcinfoDir, name)
+		srcinfo, err := ParseSrcinfo(path)
+		if err != nil {
+			t.Errorf("Error parsing %s: %s", name, err)
+			continue
+		}
+
+		if srcinfo.Version() != versions[n] {
+			t.Errorf("%s: versions do not match: expected %s got %s", name, versions[n], srcinfo.Version())
+		}
+	}
+}
