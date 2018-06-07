@@ -1,9 +1,11 @@
-package main
+package srcinfo_test
 
 import (
 	"fmt"
 	"github.com/morganamilo/go-srcinfo"
 )
+
+const SRCINFO string = "testdata/srcinfos/example_SRCINFO"
 
 const str = `
 pkgbase = gdc-bin
@@ -38,7 +40,7 @@ pkgname = libgphobos-lib32
 	provides = d-stdlib-lib32
 `
 
-func main() {
+func ExampleParseString() {
 	info, err := srcinfo.Parse(str)
 	if err != nil {
 		fmt.Println(err)
@@ -47,3 +49,42 @@ func main() {
 
 	fmt.Println(info)
 }
+
+func ExampleParseFile() {
+	info, err := srcinfo.ParseFile(SRCINFO)
+	if err != nil {
+		fmt.Println(err)
+		return
+	}
+
+	fmt.Println(info)
+}
+
+func ExampleShowSplitPackages() {
+	info, err := srcinfo.ParseFile(SRCINFO)
+	if err != nil {
+		fmt.Println(err)
+		return
+	}
+
+	for _, pkg := range info.SplitPackages() {
+		fmt.Printf("%s-%s: %s\n", pkg.Pkgname, info.Version(), pkg.Pkgdesc)
+	}
+}
+
+func ExampleShowArchitectureDependantSources() {
+	info, err := srcinfo.ParseFile(SRCINFO)
+	if err != nil {
+		fmt.Println(err)
+		return
+	}
+
+	for _, source := range info.Source {
+		if source.Arch == "" {
+			fmt.Printf("This source is for %s: %s\n", "any", source.Value)
+		} else {
+			fmt.Printf("This source is for %s: %s\n", source.Arch, source.Value)
+		}
+	}
+}
+
