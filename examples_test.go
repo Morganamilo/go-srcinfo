@@ -40,7 +40,7 @@ pkgname = libgphobos-lib32
 	provides = d-stdlib-lib32
 `
 
-func ExampleParseString() {
+func Example_parse_string() {
 	info, err := srcinfo.Parse(str)
 	if err != nil {
 		fmt.Println(err)
@@ -50,7 +50,7 @@ func ExampleParseString() {
 	fmt.Println(info)
 }
 
-func ExampleParseFile() {
+func Example_parse_file() {
 	info, err := srcinfo.ParseFile(SRCINFO)
 	if err != nil {
 		fmt.Println(err)
@@ -60,7 +60,7 @@ func ExampleParseFile() {
 	fmt.Println(info)
 }
 
-func ExampleShowSplitPackages() {
+func Example_show_split_packages() {
 	info, err := srcinfo.ParseFile(SRCINFO)
 	if err != nil {
 		fmt.Println(err)
@@ -72,7 +72,7 @@ func ExampleShowSplitPackages() {
 	}
 }
 
-func ExampleShowArchitectureDependantSources() {
+func Example_show_architecture_dependant_sources() {
 	info, err := srcinfo.ParseFile(SRCINFO)
 	if err != nil {
 		fmt.Println(err)
