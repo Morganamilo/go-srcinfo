@@ -68,9 +68,9 @@ type PackageBase struct {
 // overrides, global fields will be missing. A Package containing both global
 // and overwritten fields can be generated using the SplitPackage function.
 type Srcinfo struct {
-	PackageBase
-	Package
-	Packages []Package
+	PackageBase           // Fields that only apply to the package base
+	Package               // Fields that apply to the package globally
+	Packages    []Package // Fields for each package this package base contains
 }
 
 // Version formats a version string from the epoch, pkgver and pkgrel of the

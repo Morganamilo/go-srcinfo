@@ -87,4 +87,3 @@ func ExampleShowArchitectureDependantSources() {
 		}
 	}
 }
-
