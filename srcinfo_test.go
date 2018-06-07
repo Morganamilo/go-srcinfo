@@ -690,7 +690,7 @@ var badSrcinfos = [...]string{
 func TestGoodSrcinfos(t *testing.T) {
 	for _, name := range goodSrcinfos {
 		path := filepath.Join(goodSrcinfoDir, name)
-		srcinfo, err := ParseSrcinfo(path)
+		srcinfo, err := ParseFile(path)
 		if err != nil {
 			t.Errorf("Error parsing %s: %s", name, err)
 			continue
@@ -713,7 +713,7 @@ func TestGoodSrcinfos(t *testing.T) {
 func TestBadSrcinfos(t *testing.T) {
 	for _, name := range badSrcinfos {
 		path := filepath.Join(badSrcinfoDir, name)
-		_, err := ParseSrcinfo(path)
+		_, err := ParseFile(path)
 		if err == nil {
 			t.Errorf("%s parsed when it should have errored", name)
 		} else {
@@ -723,7 +723,7 @@ func TestBadSrcinfos(t *testing.T) {
 }
 
 func TestSrcinfoData(t *testing.T) {
-	_, err := ParseSrcinfoData(srcinfoData)
+	_, err := Parse(srcinfoData)
 	if err != nil {
 		t.Errorf("Error parsing data: %s", err)
 	}
@@ -744,7 +744,7 @@ func TestVersion(t *testing.T) {
 
 	for n, name := range srcinfos {
 		path := filepath.Join(goodSrcinfoDir, name)
-		srcinfo, err := ParseSrcinfo(path)
+		srcinfo, err := ParseFile(path)
 		if err != nil {
 			t.Errorf("Error parsing %s: %s", name, err)
 			continue

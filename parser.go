@@ -289,17 +289,17 @@ func checkArch(arches []string, key string, arch string) error {
 	return fmt.Errorf("Invalid key \"%s\" unsupported arch \"%s\"", key, arch)
 }
 
-// ParseSrcinfo parses a srcinfo file as specified by path.
-func ParseSrcinfo(path string) (*Srcinfo, error) {
+// ParseFile parses a srcinfo file as specified by path.
+func ParseFile(path string) (*Srcinfo, error) {
 	file, err := ioutil.ReadFile(path)
 	if err != nil {
 		return nil, fmt.Errorf("Unable to read file: %s: %s", path, err.Error())
 	}
 
-	return ParseSrcinfoData(string(file))
+	return Parse(string(file))
 }
 
-// ParseSrcinfoData parses a srcinfo in string form. Parsing will fail if:
+// Parse parses a srcinfo in string form. Parsing will fail if:
 //	A srcinfo does not contain all required fields
 //	The same pkgname is specified more then once
 //	arch is missing
@@ -315,6 +315,6 @@ func ParseSrcinfo(path string) (*Srcinfo, error) {
 //	arch
 //	pkgrel
 //	pkgver
-func ParseSrcinfoData(data string) (*Srcinfo, error) {
+func Parse(data string) (*Srcinfo, error) {
 	return parse(data)
 }

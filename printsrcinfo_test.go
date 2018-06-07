@@ -31,7 +31,7 @@ data:
 func TestPrintSrcinfo(t *testing.T) {
 	for _, name := range goodSrcinfos {
 		path := filepath.Join(goodSrcinfoDir, name)
-		srcinfo, err := ParseSrcinfo(path)
+		srcinfo, err := ParseFile(path)
 		if err != nil {
 			t.Errorf("Error parsing %s: %s", name, err)
 			continue
