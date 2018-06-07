@@ -1,8 +1,8 @@
 [![GPL3 license](https://img.shields.io/badge/License-GPL3-blue.svg)](LICENSE)
-[![GoDoc](https://godoc.org/github.com/morganamilo/go-srcinfo?status.svg)](https://godoc.org/github.com/morganamilo/go-srcinfo)
-[![Build Status](https://travis-ci.org/morganamilo/go-srcinfo.svg?branch=master)](https://travis-ci.org/morganamilo/go-srcinfo)
-[![codecov](https://codecov.io/gh/morganamilo/go-srcinfo/branch/master/graph/badge.svg)](https://codecov.io/gh/morganamilo/go-srcinfo)
-[![Go Report Card](https://goreportcard.com/badge/github.com/morganamilo/go-srcinfo)](https://goreportcard.com/report/github.com/morganamilo/go-srcinfo)
+[![GoDoc](https://godoc.org/github.com/Morganamilo/go-srcinfo?status.svg)](https://godoc.org/github.com/Morganamilo/go-srcinfo)
+[![Build Status](https://travis-ci.org/Morganamilo/go-srcinfo.svg?branch=master)](https://travis-ci.org/Morganamilo/go-srcinfo)
+[![codecov](https://codecov.io/gh/Morganamilo/go-srcinfo/branch/master/graph/badge.svg)](https://codecov.io/gh/Morganamilo/go-srcinfo)
+[![Go Report Card](https://goreportcard.com/badge/github.com/Morganamilo/go-srcinfo)](https://goreportcard.com/report/github.com/Morganamilo/go-srcinfo)
 
 # go-srcinfo
 
@@ -19,7 +19,7 @@ package main
 
 import (
 	"fmt"
-	"github.com/morganamilo/go-srcinfo"
+	"github.com/Morganamilo/go-srcinfo"
 )
 
 func main() {
@@ -39,7 +39,7 @@ package main
 
 import (
 	"fmt"
-	"github.com/morganamilo/go-srcinfo"
+	"github.com/Morganamilo/go-srcinfo"
 )
 
 func main() {
@@ -61,7 +61,7 @@ package main
 
 import (
 	"fmt"
-	"github.com/morganamilo/go-srcinfo"
+	"github.com/Morganamilo/go-srcinfo"
 )
 
 func main() {
@@ -87,7 +87,7 @@ package main
 
 import (
 	"fmt"
-	"github.com/morganamilo/go-srcinfo"
+	"github.com/Morganamilo/go-srcinfo"
 )
 
 const str = `

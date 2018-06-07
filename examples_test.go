@@ -2,7 +2,7 @@ package srcinfo_test
 
 import (
 	"fmt"
-	"github.com/morganamilo/go-srcinfo"
+	"github.com/Morganamilo/go-srcinfo"
 )
 
 const SRCINFO string = "testdata/srcinfos/example_SRCINFO"
