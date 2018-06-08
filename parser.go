@@ -78,7 +78,7 @@ func (psr *parser) setField(archKey, value string) error {
 
 	pkgbase := &psr.srcinfo.PackageBase
 	key, arch := splitArchFromKey(archKey)
-	err = checkArch(psr.srcinfo.Arch, key, arch)
+	err = checkArch(psr.srcinfo.Arch, archKey, arch)
 	if err != nil {
 		return err
 	}
@@ -274,9 +274,16 @@ func splitArchFromKey(key string) (string, string) {
 	return split[0], ""
 }
 
+// checkArg checks that the arch from an arch dependent string is actually
+// defined inside of the srcinfo and speicifly disallows the arch "any" as it
+// is not a real arch
 func checkArch(arches []string, key string, arch string) error {
 	if arch == "" {
 		return nil
+	}
+
+	if arch == "any" {
+		return fmt.Errorf("Invalid key \"%s\" arch \"%s\" is not allowed", key, arch)
 	}
 
 	for _, a := range arches {

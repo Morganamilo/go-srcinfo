@@ -668,6 +668,7 @@ var goodSrcinfos = [...]string{
 }
 
 var badSrcinfos = [...]string{
+	"any_field",
 	"base_field_after_pkgname",
 	"base_field_after_pkgname2",
 	"empty",
