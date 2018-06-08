@@ -679,11 +679,10 @@ var badSrcinfos = [...]string{
 	"no_key",
 	"no_file",
 	"no_pkgbase",
-	"no_pkgbase2",
 	"no_pkgname",
 	"no_pkgrel",
 	"no_pkgver",
-	"no_value",
+	//"no_value",
 	"pkgname_before_pkgbase",
 	"unknown_key",
 }

@@ -9,3 +9,4 @@ pkgname = bar
 	groups = bar
 	groups = bar-devel
 	changelog = changelog.txt
+	depends =
