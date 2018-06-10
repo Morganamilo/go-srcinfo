@@ -6,20 +6,8 @@ import (
 	"strings"
 )
 
-const (
-	headerNone    = -2
-	headerPkgbase = -1
-)
-
 // parser is used to track our current state as we parse the srcinfo.
 type parser struct {
-	// headerType tracks the current header we are under. This starts out
-	// at headerNone, until a pkgbase field is found at which point it is
-	// changed to headerPkgbase. When we encounter a pkgname field this
-	// value is the index of the current package we are paring in
-	// srcinfo.Packages.
-	headerType int
-
 	// srcinfo is a Pointer to the Srcinfo we are currently building.
 	srcinfo *Srcinfo
 
@@ -28,12 +16,12 @@ type parser struct {
 }
 
 func (psr *parser) currentPackage() (*Package, error) {
-	if psr.headerType == headerNone {
+	if psr.srcinfo.Pkgbase == "" {
 		return nil, fmt.Errorf("Not in pkgbase or pkgname")
-	} else if psr.headerType == headerPkgbase {
+	} else if len(psr.srcinfo.Packages) == 0 {
 		return &psr.srcinfo.Package, nil
 	} else {
-		return &psr.srcinfo.Packages[psr.headerType], nil
+		return &psr.srcinfo.Packages[len(psr.srcinfo.Packages) - 1], nil
 	}
 }
 
@@ -42,15 +30,14 @@ func (psr *parser) setHeaderOrField(key, value string) error {
 
 	switch key {
 	case "pkgbase":
-		if psr.headerType != headerNone {
+		if psr.srcinfo.Pkgbase != "" {
 			return fmt.Errorf("key \"%s\" can not occur after pkgbase or pkgname", key)
 		}
 
 		pkgbase.Pkgbase = value
-		psr.headerType = headerPkgbase
 		return nil
 	case "pkgname":
-		if psr.headerType == headerNone {
+		if psr.srcinfo.Pkgbase == "" {
 			return fmt.Errorf("key \"%s\" can not occur before pkgbase", key)
 		}
 		if _, ok := psr.seenPkgnames[value]; ok {
@@ -59,11 +46,10 @@ func (psr *parser) setHeaderOrField(key, value string) error {
 		psr.seenPkgnames[value] = struct{}{}
 
 		psr.srcinfo.Packages = append(psr.srcinfo.Packages, Package{Pkgname: value})
-		psr.headerType = len(psr.srcinfo.Packages) - 1
 		return nil
 	}
 
-	if psr.headerType == headerNone {
+	if psr.srcinfo.Pkgbase == "" {
 		return fmt.Errorf("key \"%s\" can not occur before pkgbase or pkgname", key)
 	}
 
@@ -101,7 +87,7 @@ func (psr *parser) setField(archKey, value string) error {
 	}
 
 	if found {
-		if psr.headerType != headerPkgbase {
+		if len(psr.srcinfo.Packages) > 0 {
 			return fmt.Errorf("key \"%s\" can not occur after pkgname", archKey)
 		}
 
@@ -134,7 +120,7 @@ func (psr *parser) setField(archKey, value string) error {
 	}
 
 	if found {
-		if psr.headerType != headerPkgbase {
+		if len(psr.srcinfo.Packages) > 0 {
 			return fmt.Errorf("key \"%s\" can not occur after pkgname", archKey)
 		}
 
@@ -191,7 +177,6 @@ func (psr *parser) setField(archKey, value string) error {
 
 func parse(data string) (*Srcinfo, error) {
 	psr := &parser{
-		headerNone,
 		&Srcinfo{},
 		make(map[string]struct{}),
 	}

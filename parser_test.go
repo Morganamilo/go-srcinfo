@@ -7,15 +7,14 @@ import (
 func TestCurrentPackage(t *testing.T) {
 	srcinfo := &Srcinfo{}
 	splitpkg := &Package{}
-	srcinfo.Packages = append(srcinfo.Packages, *splitpkg)
-	psr := &parser{headerNone, srcinfo, make(map[string]struct{})}
+	psr := &parser{srcinfo, make(map[string]struct{})}
 
 	_, err := psr.currentPackage()
 	if err == nil {
-		t.Errorf("currentPackage should fail when headerNone but didn't")
+		t.Errorf("currentPackage should because of no header but didn't")
 	}
 
-	psr.headerType = headerPkgbase
+	psr.srcinfo.Pkgbase = "foo"
 
 	pkg, err := psr.currentPackage()
 	if err != nil {
@@ -24,7 +23,7 @@ func TestCurrentPackage(t *testing.T) {
 		t.Errorf("currentPackage does not return srcinfo.Package")
 	}
 
-	psr.headerType = 0
+	srcinfo.Packages = append(srcinfo.Packages, *splitpkg)
 
 	pkg, err = psr.currentPackage()
 	if err != nil {
@@ -73,10 +72,10 @@ func TestSplitPair(t *testing.T) {
 
 func TestSetField(t *testing.T) {
 	srcinfo := &Srcinfo{}
-	psr := &parser{headerNone, srcinfo, make(map[string]struct{})}
+	psr := &parser{srcinfo, make(map[string]struct{})}
 
 	err := psr.setField("install", "foo")
 	if err == nil {
-		t.Errorf("setfield should have errored due to no headerEmpty but did not")
+		t.Errorf("setField should have errored due to no header but did not")
 	}
 }
