@@ -111,6 +111,27 @@ func (si *Srcinfo) SplitPackage(pkgname string) (*Package, error) {
 	return nil, fmt.Errorf("Package \"%s\" is not part of the package base \"%s\"", pkgname, si.Pkgbase)
 }
 
+func mergeArchSlice(global, override []ArchString) []ArchString {
+	overridden := make(map[string]struct{})
+	merged := make([]ArchString, 0, len(override))
+
+	for _, v := range override {
+		overridden[v.Arch] = struct{}{}
+		if v.Value == "" {
+			continue
+		}
+		merged = append(merged, v)
+	}
+
+	for _, v := range global {
+		if _, ok := overridden[v.Arch]; !ok {
+			merged = append(merged, v)
+		}
+	}
+
+	return merged
+}
+
 func mergeSplitPackage(base, split *Package) *Package {
 	pkg := &Package{}
 	*pkg = *base
@@ -138,23 +159,23 @@ func mergeSplitPackage(base, split *Package) *Package {
 	}
 
 	if len(split.Depends) != 0 {
-		pkg.Depends = split.Depends
+		pkg.Depends = mergeArchSlice(pkg.Depends, split.Depends)
 	}
 
 	if len(split.OptDepends) != 0 {
-		pkg.OptDepends = split.OptDepends
+		pkg.OptDepends = mergeArchSlice(pkg.OptDepends, split.OptDepends)
 	}
 
 	if len(split.Provides) != 0 {
-		pkg.Provides = split.Provides
+		pkg.Provides = mergeArchSlice(pkg.Provides, split.Provides)
 	}
 
 	if len(split.Conflicts) != 0 {
-		pkg.Conflicts = split.Conflicts
+		pkg.Conflicts = mergeArchSlice(pkg.Conflicts, split.Conflicts)
 	}
 
 	if len(split.Replaces) != 0 {
-		pkg.Replaces = split.Replaces
+		pkg.Replaces = mergeArchSlice(pkg.Replaces, split.Replaces)
 	}
 
 	if len(split.Backup) != 0 {

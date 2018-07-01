@@ -195,12 +195,11 @@ func parse(data string) (*Srcinfo, error) {
 			return nil, Error(n+1, line, err.Error())
 		}
 
-
 		// makepkg genrates empty values some times. I believe this to be a bug
 		// but it is best to accomadate for it.
-		if value == "" {
-			continue
-		}
+		//if value == "" {
+		//	continue
+		//}
 
 		err = psr.setHeaderOrField(key, value)
 		if err != nil {
