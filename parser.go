@@ -69,6 +69,10 @@ func (psr *parser) setField(archKey, value string) error {
 		return err
 	}
 
+	if value == "" {
+		value = EmptyOverride
+	}
+
 	// pkgbase only + not arch dependent
 	found := true
 	switch archKey {
@@ -195,12 +199,6 @@ func parse(data string) (*Srcinfo, error) {
 			return nil, Error(n+1, line, err.Error())
 		}
 
-		// makepkg genrates empty values some times. I believe this to be a bug
-		// but it is best to accomadate for it.
-		//if value == "" {
-		//	continue
-		//}
-
 		err = psr.setHeaderOrField(key, value)
 		if err != nil {
 			return nil, Error(n+1, line, err.Error())
@@ -245,12 +243,6 @@ func splitPair(line string) (string, string, error) {
 	if key == "" {
 		return "", "", fmt.Errorf("Key is empty")
 	}
-
-	// makepkg genrates empty values some times. I believe this to be a bug
-	// but it is best to accomadate for it.
-	//if value == "" {
-	//	return "", "", fmt.Errorf("value is empty")
-	//}
 
 	return key, value, nil
 }

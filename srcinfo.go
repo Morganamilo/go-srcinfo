@@ -73,6 +73,23 @@ type Srcinfo struct {
 	Packages    []Package // Fields for each package this package base contains
 }
 
+// EmptyOverride is used to signal when a value has been overridden with an
+// empty value. An empty ovrride is when a value is defined in the pkgbuild but
+// then overridden inside the package function to be empty.
+//
+// For example "pkgdesc=''" is an empty override on the pkgdesc which would
+// lead to the line "pkgdesc=" in the srcinfo.
+//
+// This value is used internally to store empty overrides, mainly to avoid
+// using string pointers. It is possible to check for empty overrides using
+// the Packages slice in Packagebase.
+//
+// During normal use with the SplitPackage function this value will be
+// converted back to an empty string, or removed entirely for slice values.
+// This means the this value can be completley ignored unless you are
+// explicitly looking for empty overrides.
+const EmptyOverride = "\x00"
+
 // Version formats a version string from the epoch, pkgver and pkgrel of the
 // srcinfo. In the format [epoch:]pkgver-pkgrel.
 func (si *Srcinfo) Version() string {
@@ -117,7 +134,7 @@ func mergeArchSlice(global, override []ArchString) []ArchString {
 
 	for _, v := range override {
 		overridden[v.Arch] = struct{}{}
-		if v.Value == "" {
+		if v.Value == EmptyOverride {
 			continue
 		}
 		merged = append(merged, v)

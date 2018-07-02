@@ -12,7 +12,7 @@ func srcinfosEqual(t *testing.T, name, data, file string) {
 	fileLines := strings.Split(file, "\n")
 
 data:
-	for _, dataLine := range dataLines {
+	for line, dataLine := range dataLines {
 		trimmed := strings.TrimSpace(dataLine)
 		if trimmed == "" || strings.HasPrefix(trimmed, "#") {
 			continue
@@ -24,7 +24,7 @@ data:
 			}
 		}
 
-		t.Errorf("%s Line \"%s\" can not be found in source file", name, dataLine)
+		t.Errorf("%s Line %d \"%s\" can not be found in source file", name, line, dataLine)
 	}
 }
 

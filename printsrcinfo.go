@@ -17,17 +17,29 @@ func appendValue(buffer *bytes.Buffer, key string, value string) {
 		return
 	}
 
+	if value == EmptyOverride {
+		value = ""
+	}
+
 	buffer.WriteString("\t" + key + " = " + value + "\n")
 }
 
 func appendMultiValue(buffer *bytes.Buffer, key string, values []string) {
 	for _, value := range values {
+		if value == EmptyOverride {
+			value = ""
+		}
+
 		buffer.WriteString("\t" + key + " = " + value + "\n")
 	}
 }
 
 func appendMultiArchValue(buffer *bytes.Buffer, key string, values []ArchString) {
 	for _, value := range values {
+		if value.Value == EmptyOverride {
+			value.Value = ""
+		}
+
 		if value.Arch == "" {
 			buffer.WriteString("\t" + key + " = " + value.Value + "\n")
 		} else {
