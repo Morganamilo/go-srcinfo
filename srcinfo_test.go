@@ -686,7 +686,7 @@ var badSrcinfos = [...]string{
 	"no_pkgver",
 	//"no_value",
 	"pkgname_before_pkgbase",
-	"unknown_key",
+	//"unknown_key",
 }
 
 func TestGoodSrcinfos(t *testing.T) {

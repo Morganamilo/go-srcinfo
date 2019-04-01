@@ -172,8 +172,6 @@ func (psr *parser) setField(archKey, value string) error {
 		pkg.Provides = append(pkg.Provides, ArchString{arch, value})
 	case "replaces":
 		pkg.Replaces = append(pkg.Replaces, ArchString{arch, value})
-	default:
-		return fmt.Errorf("Unknown key: \"%s\"", archKey)
 	}
 
 	return nil
