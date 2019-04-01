@@ -115,6 +115,8 @@ func (psr *parser) setField(archKey, value string) error {
 		pkgbase.SHA384Sums = append(pkgbase.SHA384Sums, ArchString{arch, value})
 	case "sha512sums":
 		pkgbase.SHA512Sums = append(pkgbase.SHA512Sums, ArchString{arch, value})
+	case "b2sums":
+		pkgbase.B2Sums = append(pkgbase.B2Sums, ArchString{arch, value})
 	case "makedepends":
 		pkgbase.MakeDepends = append(pkgbase.MakeDepends, ArchString{arch, value})
 	case "checkdepends":
