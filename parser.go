@@ -21,7 +21,7 @@ func (psr *parser) currentPackage() (*Package, error) {
 	} else if len(psr.srcinfo.Packages) == 0 {
 		return &psr.srcinfo.Package, nil
 	} else {
-		return &psr.srcinfo.Packages[len(psr.srcinfo.Packages) - 1], nil
+		return &psr.srcinfo.Packages[len(psr.srcinfo.Packages)-1], nil
 	}
 }
 
